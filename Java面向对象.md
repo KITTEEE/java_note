@@ -200,3 +200,50 @@ class Android extends Developer {
 
 **this 代表的是对象，哪个对象调用了 this 所在的方法，this 代表的就是哪个对象。**例如 p.setAge(30) 语句中，setAge(int age) 方法中的 this 代表的就是 对象 p 。
 
+
+
+### final关键字
+
+Java 的继承提高了代码的复用性，子类在继承父类后可以对父类中的变量或方法进行重写。如果不想让子类能够重写父类中的某个变量或方法，就可以使用 final 关键字。final 的意思为最终的、不可变的，它可以用来修饰类、类的成员、以及局部变量。
+
+
+
+#### final使用特点
+
+* 用 final 修饰过的类不能被继承，但可以继承其他类。
+
+```java
+class Yy {}
+final class Fu extends Yy {}
+class Zi extends Fu {} //不能被继承
+```
+
+* 父类中用 final 修饰的方法，子类继承后不能重写；父类中没有被 final 修饰的方法，子类重写后可添加 final 修饰
+
+```java
+class Fu() {
+    public final void method1() {}
+    public void method2() {}
+}
+class Zi extends Fu() {
+    public final void method2(){}//重写 method2 方法并添加 final 修饰
+}
+```
+
+* final 修饰的变量为常量，只能赋值一次；final 修饰的成员变量须在创建对象前赋值，否则报错
+
+```java
+final int i = 1;
+i = 2;//报错
+
+class Demo () {
+    final int m = 100;
+    final int n;//没有赋值(没构造方法)会报错
+    public Demo() {
+        n = 2016;//可在创建对象所调用的构造方法中为 final 成员变量赋值
+    }
+}
+```
+
+
+
