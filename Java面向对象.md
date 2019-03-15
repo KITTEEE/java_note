@@ -247,3 +247,119 @@ class Demo () {
 
 
 
+### static关键字
+
+#### static的特点
+
+* **被 static 修饰的成员变量不属于类的某个对象，而是属于类。**也就是说假如某个对象修改了类中的 static 成员变量，其他对象中的 static 成员变量也会跟着改变。
+* 被 static 修饰的成员变量可以并且建议直接通过类名访问。  
+
+```java
+class Demo {
+    public static int num = 100;
+    public static void method() {
+        Syso("静态方法");
+    }
+}
+class Test {
+    public static void main(String[] args) {
+        Demo d1 = new Demo();
+        Demo d2 = new Demo();
+        d1.num = 200;
+        Syso(d1.num);
+        Syso(d2.num);//200
+        Syso(Demo.num);//200
+    	Demo.method();//静态方法
+    }
+}
+```
+
+
+
+#### static 注意事项
+
+* 静态内容是优先与对象的存在，静态修饰的内容存在于静态区，**不能使用 this / super 访问静态变量**。
+
+* 静态成员只能访问静态成员(如：静态方法中只能访问静态成员变量或静态成员方法)。
+* main 方法为静态方法仅仅为程序执行入口，它不属于任何一个对象，可以定义在任意类中。
+
+```java
+class Demo {
+    public int num1 = 10;
+    public static int num2 = 20;
+    public static void method() {
+        Syso(num1);//无法访问
+        Syso(num2);//20
+    }
+}
+```
+
+
+
+#### 静态常量
+
+* 定义静态常量一般用 public static final 来定义，此时变量名全部用大写，多个单词用下划线连接。
+
+* 接口中的每个成员变量都默认使用 public static final 修饰，所有接口中的成员变量都已经是常量，由于接口没有构造方法，因此需要显示赋值。接口的静态常量可以直接用接口名访问。
+
+```java
+public static final String SCHOOL_NAME = "SCSU"//定义静态常量
+interface inter {
+	public static final int count = 1;    
+}
+inter.count;//可以直接用接口名访问
+```
+
+
+
+### 匿名对象
+
+匿名对象指的是在创建对象时只有创建语句，但并没有把对象地址赋值给某个变量。
+
+```java
+Person p = new Person();//创建普通对象
+new Person();//创建匿名对象
+```
+
+
+
+#### 匿名对象特点
+
+* 匿名对象可直接调用方法
+* 匿名对象在没有指定其引用对象时只能使用一次
+* 匿名对象可以作为方法接收的参数和方法的返回值
+
+```java
+new Person().eat();//对象直接调用方法
+class Demo {
+    public static Person getPerson(){
+    	return new Person();
+    }
+    public static void method(Person p) {
+        
+    }
+}
+class Test {
+    public static void main(String args[]) {
+        Person p = Demo.getPerson();//接收方法的返回值
+     	Demo.method(new Person());//作为方法接收的参数   
+    }
+}
+```
+
+
+
+### 内部类
+
+略
+
+
+
+### 修饰符访问权限
+
+|                        | public | protected | default | private |
+| :--------------------: | ------ | --------- | ------- | ------- |
+|        同一类中        | T      | T         | T       | T       |
+| 同一包中(子类与无关类) | T      | T         | T       |         |
+|      不同包的子类      | T      | T         |         |         |
+
